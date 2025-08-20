@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="bg-white p-8 rounded-md shadow w-full mx-auto">
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-semibold text-indigo-700">Responses Dashboard</h2>
+        <a href="{{ url_for('main.admin_logout') }}" class="bg-red-500 text-sm text-white px-3 py-2 rounded-md hover:bg-red-600 transition">Logout</a>
+    </div>
+
+    <!-- Filter -->
+    <form method="get" class="flex items-center gap-4 mb-6">
+        <select name="severity"
+            class="border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <option value="">Filter by severity</option>
+            <option value="Minimal">Minimal</option>
+            <option value="Mild">Mild</option>
+            <option value="Moderate">Moderate</option>
+            <option value="Moderately severe">Moderately severe</option>
+            <option value="Severe">Severe</option>
+        </select>
+        <button type="submit"
+            class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">Apply</button>
+    </form>
+
+    <div class="overflow-x-auto">
+        <table class="min-w-full text-sm border border-gray-200 rounded-lg overflow-hidden">
+            <thead class="bg-slate-100 text-gray-700">
+                <tr>
+                    <th class="p-3 text-left">ID</th>
+                    <th class="p-3 text-left">Name</th>
+                    <th class="p-3 text-left">Age</th>
+                    <th class="p-3 text-left">Score</th>
+                    <th class="p-3 text-left">Interpretation</th>
+                    <th class="p-3 text-left">Suicidal</th>
+                    <th class="p-3 text-left">Date</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                {% for r in responses %}
+                <tr class="hover:bg-slate-50 transition">
+                    <td class="p-3">{{ r.id }}</td>
+                    <td class="p-3">{{ r.respondent.name or "-" }}</td>
+                    <td class="p-3">{{ r.respondent.age or "-" }}</td>
+                    <td class="p-3 font-semibold text-indigo-600">{{ r.score }}</td>
+                    <td class="p-3">{{ r.interpretation }}</td>
+                    <td class="p-3">
+                        {% if r.flagged_suicidal_thoughts %}
+                        <span class="text-red-600 font-semibold">⚠️ Yes</span>
+                        {% else %}
+                        <span class="text-gray-600">No</span>
+                        {% endif %}
+                    </td>
+                    <td class="p-3 text-gray-500">{{ r.submitted_at.strftime("%Y-%m-%d %H:%M") }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

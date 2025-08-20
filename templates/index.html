@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="bg-white px-16 py-6 rounded-lg shadow">
+    <h1 class="text-3xl font-semibold my-6">Welcome to <span class="text-indigo-700">MindCheck</span></h1>
+    <p class="my-4">A short QnA that helps screen for symptoms of depression.</p>
+
+    <ul class="list-disc ml-5 my-6 text-sm text-slate-600">
+        <li>Takes about 2-5 minutes.</li>
+        <li>Your answers will be stored securely in the application database.</li>
+        <li>If you answer positively to thoughts of self-harm, please seek immediate help.</li>
+    </ul>
+
+    <div class="w-full flex justify-center items-center">
+        <a href="{{ url_for('main.qna') }}"
+            class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-md transition">Start Screening</a>
+    </div>
+</div>
+
+{% endblock %}
